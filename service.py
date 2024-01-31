@@ -1,5 +1,4 @@
 import pandas as pd
-import folium
 from geopy.distance import geodesic
 import csv
 import tsp
