@@ -60,10 +60,8 @@ async def location(message: types.Message, state: FSMContext):
             lat = data.get("lat", "Unknown")
             lon = data.get("lon", "Unknown")
             if int(data.get("action", "Unknown")) == 4:
-                places = requests.get(f'{conf["APP"]}/api/closest-places/?coordinate_x=60.000442&coordinate_y=30.329375&amount=2').json()
-                # places = requests.get(f'http://127.0.0.1:8000/api/closest-places/?coordinate_x={lat}&coordinate_y={lon}&amount={n}').json()
-                await message.answer(f"Получили",
-                                         reply_markup=greet_kb)
+                # places = requests.get(f'{conf["APP"]}/api/closest-places/?coordinate_x=60.000442&coordinate_y=30.329375&amount=2').json()
+                places = requests.get(f'http://127.0.0.1:8000/api/closest-places/?coordinate_x={lat}&coordinate_y={lon}&amount={n}').json()
                 for place in places:
                     await message.answer_location(latitude=place['coordinate_x'],
                                                   longitude=place['coordinate_y'])
