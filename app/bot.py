@@ -33,7 +33,8 @@ async def start(message: types.Message):
                          f"ближайших мест, связанных нажмите на кнопку 'Места рядом' \n\n"
                          f"Чтобы составить маршрут из нескольких мест нажмите на кнопку 'Маршрут' \n\n"
                          f"Чтобы составить кольцевой маршрут в котором  вы начнете с вашей геопозиции "
-                         f"и вернетесь туда, где сейчас находитесь нажмите на кнопку 'Кольцевой маршрут'",
+                         f"и вернетесь туда, где сейчас находитесь нажмите на кнопку 'Кольцевой маршрут'"
+                         f"Чтобы получить маршрут, составленный краеведом нажнмите на кнопку 'Тематический маршрут'",
                          reply_markup=greet_kb)
 
 
@@ -60,7 +61,6 @@ async def location(message: types.Message, state: FSMContext):
             lat = data.get("lat", "Unknown")
             lon = data.get("lon", "Unknown")
             if int(data.get("action", "Unknown")) == 4:
-                # places = requests.get(f'{conf["APP"]}/api/closest-places/?coordinate_x=60.000442&coordinate_y=30.329375&amount=2').json()
                 places = requests.get(f'{conf["APP"]}/api/closest-places/?coordinate_x={lat}&coordinate_y={lon}&amount={n}').json()
                 for place in places:
                     await message.answer_location(latitude=place['coordinate_x'],
@@ -84,7 +84,7 @@ async def location(message: types.Message, state: FSMContext):
      except Exception:
          if message.text == 'Места рядом':
              await message.answer(
-                 f"Отправьте свою геопозицию, чтобы получить список ближайших мест, связанных с литературой",
+                 f"Отправьте свою геопозицию, чтобы получить список ближайших интересных тмест",
                  reply_markup=ReplyKeyboardRemove())
              await state.update_data(action=4)
          elif message.text == 'Маршрут':
